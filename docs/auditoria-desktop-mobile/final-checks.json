@@ -1,0 +1,61 @@
+[
+  {
+    "name": "contrast-final",
+    "value": [
+      {
+        "color": "rgb(255, 255, 0)",
+        "background": "rgb(237, 252, 249)"
+      }
+    ]
+  },
+  {
+    "name": "panel-1366x600",
+    "value": {
+      "top": -125.859375,
+      "bottom": 480
+    }
+  },
+  {
+    "name": "onboarding-screenreader",
+    "value": {
+      "settings": {
+        "fontSize": "md",
+        "highContrast": "default",
+        "dyslexicFont": false,
+        "reducedSensory": false,
+        "voiceReadingEnabled": false,
+        "preferredView": "list",
+        "enhancedFocus": true
+      },
+      "list": "true"
+    }
+  },
+  {
+    "name": "tts-disabled-still-runs",
+    "value": {
+      "enabled": false,
+      "calls": 1
+    }
+  },
+  {
+    "name": "before-storage-fault",
+    "value": 1
+  },
+  {
+    "name": "storage-fault",
+    "value": {
+      "ready": "complete",
+      "rootChildren": 0
+    }
+  },
+  {
+    "name": "storage-fault-errors",
+    "value": [
+      "QuotaExceededError: Storage unavailable"
+    ]
+  },
+  {
+    "name": "after-storage-fault",
+    "value": 1
+  }
+]

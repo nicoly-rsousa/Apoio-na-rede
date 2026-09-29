@@ -1,0 +1,31 @@
+{
+  "date": "2026-09-13",
+  "environment": "Chrome emulado; APIs externas bloqueadas",
+  "passed": [
+    "Educação disponível",
+    "Nome obrigatório e foco",
+    "Descrição obrigatória",
+    "Cidade obrigatória",
+    "UF válida obrigatória",
+    "Localização exige confirmação",
+    "Progresso ARIA consistente",
+    "Fotos cabem em 320 px",
+    "URL inválida rejeitada",
+    "Imagem quebrada recebe fallback",
+    "Sem nota fictícia",
+    "Coordenadas escolhidas persistidas",
+    "Busca sem acento encontra registro",
+    "Navegação mobile abre mapa",
+    "Detalhes têm URL específica",
+    "Recarregar preserva detalhes",
+    "Compartilhamento identifica destino",
+    "Avaliação ainda funciona",
+    "Painel Extra cabe no desktop baixo",
+    "Alto contraste usa fundo preto",
+    "Escape fecha painel e restaura foco",
+    "Preferência sem voz oculta leitura",
+    "Voz pode ser reativada",
+    "Navegação desktop abre mapa",
+    "Falha de armazenamento não derruba aplicação"
+  ]
+}

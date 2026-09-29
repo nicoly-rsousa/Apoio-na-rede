@@ -1,0 +1,228 @@
+[
+  {
+    "name": "home-1440x900",
+    "value": {
+      "width": 1440,
+      "scrollWidth": 1425,
+      "height": 900,
+      "overflow": []
+    }
+  },
+  {
+    "name": "home-1024x768",
+    "value": {
+      "width": 1024,
+      "scrollWidth": 1009,
+      "height": 768,
+      "overflow": []
+    }
+  },
+  {
+    "name": "home-768x1024",
+    "value": {
+      "width": 768,
+      "scrollWidth": 768,
+      "height": 1024,
+      "overflow": [
+        {
+          "tag": "DIV",
+          "text": "",
+          "right": 771
+        },
+        {
+          "tag": "path",
+          "text": "",
+          "right": 787
+        },
+        {
+          "tag": "path",
+          "text": "",
+          "right": 787
+        }
+      ]
+    }
+  },
+  {
+    "name": "home-390x844",
+    "value": {
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 844,
+      "overflow": []
+    }
+  },
+  {
+    "name": "home-360x800",
+    "value": {
+      "width": 360,
+      "scrollWidth": 360,
+      "height": 800,
+      "overflow": []
+    }
+  },
+  {
+    "name": "home-320x568",
+    "value": {
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 568,
+      "overflow": []
+    }
+  },
+  {
+    "name": "home-844x390",
+    "value": {
+      "width": 844,
+      "scrollWidth": 844,
+      "height": 390,
+      "overflow": [
+        {
+          "tag": "DIV",
+          "text": "",
+          "right": 850
+        },
+        {
+          "tag": "path",
+          "text": "",
+          "right": 868
+        },
+        {
+          "tag": "path",
+          "text": "",
+          "right": 868
+        }
+      ]
+    }
+  },
+  {
+    "name": "register-category-options",
+    "value": [
+      "alimentacao",
+      "saude",
+      "lazer_cultura",
+      "comercio_loja",
+      "servico_publico",
+      "banheiro_adaptado",
+      "hospedagem",
+      "transporte_mobilidade"
+    ]
+  },
+  {
+    "name": "empty-name-blocked",
+    "value": true
+  },
+  {
+    "name": "empty-description-accepted",
+    "value": true
+  },
+  {
+    "name": "empty-city-state-accepted",
+    "value": true
+  },
+  {
+    "name": "criteria-mobile",
+    "value": {
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 844,
+      "overflow": []
+    }
+  },
+  {
+    "name": "progress-invalid",
+    "value": {
+      "value": "75",
+      "max": "4"
+    }
+  },
+  {
+    "name": "criteria-with-observation-mobile",
+    "value": {
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 844,
+      "overflow": []
+    }
+  },
+  {
+    "name": "photos-mobile",
+    "value": {
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 844,
+      "overflow": []
+    }
+  },
+  {
+    "name": "invalid-photo-accepted",
+    "value": true
+  },
+  {
+    "name": "registration-saved",
+    "value": [
+      {
+        "nome": "Auditoria Café",
+        "descricao": "",
+        "latitude": -21.3924,
+        "longitude": -42.6896,
+        "status": "pendente",
+        "nota": 5,
+        "avaliacoes": 0
+      }
+    ]
+  },
+  {
+    "name": "detail-mobile",
+    "value": {
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 844,
+      "overflow": []
+    }
+  },
+  {
+    "name": "detail-url",
+    "value": "http://127.0.0.1:4173/"
+  },
+  {
+    "name": "review-saved",
+    "value": [
+      {
+        "comentario": "Avaliação de teste local da auditoria.",
+        "nota": 5
+      }
+    ]
+  },
+  {
+    "name": "extra-font-mobile",
+    "value": {
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 844,
+      "overflow": []
+    }
+  },
+  {
+    "name": "extra-font-applied",
+    "value": "20px"
+  },
+  {
+    "name": "contrast-applied",
+    "value": "text-slate-900 antialiased selection:bg-blue-200 selection:text-blue-900 theme-yellow-black"
+  },
+  {
+    "name": "reload-loses-detail",
+    "value": {
+      "url": "http://127.0.0.1:4173/",
+      "detail": false,
+      "saved": 1
+    }
+  },
+  {
+    "name": "mobile-map-nav-from-list",
+    "value": {
+      "mapVisible": false,
+      "listSelected": "true"
+    }
+  }
+]

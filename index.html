@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/brand/favicon.png" />
+    <link rel="apple-touch-icon" href="/brand/favicon.png" />
+    <meta name="theme-color" content="#101111" />
+    <script>
+      try {
+        document.documentElement.dataset.theme = localStorage.getItem('apoio_color_theme') === 'light' ? 'light' : 'dark';
+      } catch { document.documentElement.dataset.theme = 'dark'; }
+    </script>
+    <title>Apoio na rede — Acessibilidade urbana</title>
+    <meta name="description" content="Pesquise locais de Cataguases e consulte informações comunitárias sobre acessibilidade." />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content="Apoio na rede — Acessibilidade urbana" />
+    <meta property="og:description" content="Informações de acessibilidade para planejar visitas e deslocamentos em Cataguases." />
+    <meta property="og:image" content="/brand/apoio-na-rede-logo.png" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="manifest" href="/site.webmanifest" />
+    
+    <!-- Tipografia: Manrope para interface, Newsreader para títulos e Lexend como opção de leitura -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS -->
+  </head>
+  <body class="text-slate-900 antialiased selection:bg-blue-200 selection:text-blue-900">
+    <div id="root"></div>
+
+    <!-- Widget VLibras Oficial (Governo Federal) -->
+    <div vw class="enabled">
+      <div vw-access-button class="active"></div>
+      <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+      </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+      try {
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+      } catch (e) {
+        console.warn('VLibras não inicializado no ambiente local:', e);
+      }
+    </script>
+
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

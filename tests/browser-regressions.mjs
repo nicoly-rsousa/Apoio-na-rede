@@ -1,0 +1,64 @@
+// Run against an isolated Chrome profile (CDP :9222) and Vite preview (:4173).
+// External requests are blocked: these checks cover local behavior, not providers.
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+const targets = await (await fetch('http://127.0.0.1:9222/json/list')).json();
+const ws = new WebSocket(targets.find(t => t.type === 'page').webSocketDebuggerUrl);
+await new Promise((resolve, reject) => { ws.onopen = resolve; ws.onerror = reject; });
+let id = 0;
+const pending = new Map();
+ws.onmessage = ({data}) => { const message = JSON.parse(data); const request = pending.get(message.id); if (request) { clearTimeout(request.timer); pending.delete(message.id); if (message.error) request.reject(message.error); else request.resolve(message.result); } };
+const send = (method, params = {}) => new Promise((resolve, reject) => { const requestId = ++id; const timer = setTimeout(() => reject(new Error(`Timeout: ${method}`)), 15000); pending.set(requestId, {resolve, reject, timer}); ws.send(JSON.stringify({id:requestId,method,params})); });
+const evaluate = async expression => { const result = await send('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true,userGesture:true}); if (result.exceptionDetails) throw Error(result.exceptionDetails.exception?.description || result.exceptionDetails.text); return result.result.value; };
+const pause = ms => new Promise(resolve => setTimeout(resolve,ms));
+const click = async text => { await evaluate(`(()=>{const e=[...document.querySelectorAll('button')].find(e=>e.textContent.trim()===${JSON.stringify(text)}&&e.getClientRects().length);if(!e)throw Error('Missing button: '+${JSON.stringify(text)});e.click()})()`); await pause(100); };
+const fill = async (selector,value) => { await evaluate(`(()=>{const e=document.querySelector(${JSON.stringify(selector)});const proto=e.tagName==='TEXTAREA'?HTMLTextAreaElement.prototype:e.tagName==='SELECT'?HTMLSelectElement.prototype:HTMLInputElement.prototype;Object.getOwnPropertyDescriptor(proto,'value').set.call(e,${JSON.stringify(value)});e.dispatchEvent(new Event(e.tagName==='SELECT'?'change':'input',{bubbles:true}))})()`);await pause(60); };
+const results=[];
+const check=async(name,expression)=>{const result=await evaluate(expression);assert.equal(result,true,name);results.push(name);console.log('PASS',name);};
+const resize=async(width,height)=>{await send('Emulation.setDeviceMetricsOverride',{width,height,mobile:width<1024,deviceScaleFactor:1});await pause(150);};
+try {
+ await send('Page.enable');await send('Runtime.enable');await send('Network.enable');await send('Network.setBlockedURLs',{urls:['https://*']});
+ await resize(320,800);await send('Page.navigate',{url:'http://127.0.0.1:4173/'});await pause(1500);
+ // Only this isolated test origin is reset.
+ await evaluate('localStorage.clear()');await send('Page.reload');await pause(1200);
+ await evaluate(`document.querySelector('[aria-label="Continuar com configuração padrão"]').click()`);await click('Cadastrar');
+ await check('Educação disponível',`[...document.querySelector('#est-categoria').options].some(e=>e.value==='educacao')`);
+ await click('Próxima Etapa');await check('Nome obrigatório e foco',`document.activeElement.id==='est-nome'`);
+ await fill('#est-nome','Café de Regressão');await click('Próxima Etapa');await check('Descrição obrigatória',`document.activeElement.id==='est-desc'&&!!document.querySelector('#step1-heading')`);
+ await fill('#est-desc','Descrição do local de teste');await click('Próxima Etapa');
+ await fill('#est-end','Rua de Teste, 123');await fill('#est-cidade','');await click('Próxima Etapa');await check('Cidade obrigatória',`document.activeElement.id==='est-cidade'`);
+ await fill('#est-cidade','Cataguases');await fill('#est-estado','ZZ');await click('Próxima Etapa');await check('UF válida obrigatória',`document.activeElement.id==='est-estado'`);
+ await fill('#est-estado','MG');await click('Próxima Etapa');await check('Localização exige confirmação',`document.activeElement.id==='manual-latitude'&&!!document.querySelector('#step2-heading')`);
+ await fill('#manual-latitude','-21.4');await fill('#manual-longitude','-42.7');await click('Confirmar coordenadas');await click('Próxima Etapa');
+ await check('Progresso ARIA consistente',`(()=>{const e=document.querySelector('[role="progressbar"]');return Number(e.getAttribute('aria-valuenow'))<=Number(e.getAttribute('aria-valuemax'))})()`);
+ await fill('#crit-0','sim');await click('Próxima Etapa');
+ await check('Fotos cabem em 320 px',`document.documentElement.scrollWidth<=document.documentElement.clientWidth`);
+ await fill('#photo-url','invalid-photo-url');await click('Adicionar');await check('URL inválida rejeitada',`!document.querySelector('img[src="invalid-photo-url"]')&&document.activeElement.id==='photo-url'`);
+ await fill('#photo-url','https://example.com/missing.png');await click('Adicionar');await pause(150);
+ await check('Imagem quebrada recebe fallback',`!!document.querySelector('section img[src="/brand/apoio-na-rede-logo.png"]')`);
+ await click('Enviar cadastro');await pause(1800);await click('Lista');
+ await check('Sem nota fictícia',`document.body.innerText.includes('Sem avaliações')&&JSON.parse(localStorage.getItem('acessacidade_establishments'))[0].nota_media===0`);
+ await check('Coordenadas escolhidas persistidas',`JSON.parse(localStorage.getItem('acessacidade_establishments'))[0].latitude===-21.4`);
+ await fill('#main-search-input','cafe de regressao');await check('Busca sem acento encontra registro',`document.querySelector('#results-section').innerText.includes('Mostrando 1')`);
+ await click('Mapa');await pause(150);await check('Navegação mobile abre mapa',`!!document.querySelector('#explorer-map')`);
+ await click('Lista');await click('Ver informações');await check('Detalhes têm URL específica',`new URL(location.href).searchParams.has('local')`);
+ await send('Page.reload');await pause(1200);await check('Recarregar preserva detalhes',`!!document.querySelector('#review-comment')`);
+ await evaluate(`window.__shared=null;Object.defineProperty(navigator,'share',{configurable:true,value:async data=>{window.__shared=data}});document.querySelector('[aria-label="Compartilhar localização"]').click()`);await pause(100);
+ await check('Compartilhamento identifica destino',`new URL(window.__shared.url).searchParams.get('query')==='-21.4,-42.7'`);
+ await fill('#review-comment','Avaliação de regressão.');await click('Publicar Avaliação');await check('Avaliação ainda funciona',`JSON.parse(localStorage.getItem('acessacidade_reviews')).length===1`);
+ await resize(1366,600);await evaluate(`document.querySelector('.accessibility-launcher button').click()`);await click('Extra');
+ await check('Painel Extra cabe no desktop baixo',`document.querySelector('#accessibility-menu').getBoundingClientRect().top>=0`);
+ await click('Amarelo/Preto');await pause(500);await check('Alto contraste usa fundo preto',`getComputedStyle([...document.querySelectorAll('#accessibility-menu button')].find(e=>e.textContent.includes('Refazer'))).backgroundColor==='rgb(0, 0, 0)'`);
+ await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});await pause(100);await check('Escape fecha painel e restaura foco',`!document.querySelector('#accessibility-menu')&&document.activeElement===document.querySelector('.accessibility-launcher button')`);
+ await evaluate(`document.querySelector('.accessibility-launcher button').click()`);await click('Restaurar configurações padrão');await click('Refazer configuração guiada');
+ await evaluate(`document.querySelector('[role="dialog"] [role="checkbox"]').click()`);await pause(100);await click('Aplicar 1 preferência');
+ await check('Preferência sem voz oculta leitura',`JSON.parse(localStorage.getItem('acessacidade_accessibility_settings')).voiceReadingEnabled===false&&document.querySelectorAll('[aria-label^="Ouvir em voz alta"]').length===0`);
+ await evaluate(`document.querySelector('.accessibility-launcher button').click();`);await pause(100);await evaluate(`document.querySelector('#accessibility-menu input[type="checkbox"]').click()`);await pause(100);
+ await check('Voz pode ser reativada',`JSON.parse(localStorage.getItem('acessacidade_accessibility_settings')).voiceReadingEnabled===true&&document.querySelectorAll('[aria-label^="Ouvir em voz alta"]').length>0`);
+ await evaluate(`document.querySelector('[aria-label="Fechar menu de acessibilidade"]').click()`);
+ await click('Voltar ao Catálogo');await click('Lista');await click('Mapa & Catálogo');await pause(150);await check('Navegação desktop abre mapa',`!!document.querySelector('#explorer-map')`);
+ const injection=await send('Page.addScriptToEvaluateOnNewDocument',{source:`Storage.prototype.setItem=function(){throw new DOMException('Unavailable','QuotaExceededError')}`});
+ await send('Page.reload');await pause(1200);await check('Falha de armazenamento não derruba aplicação',`document.querySelector('#root').childElementCount>0&&document.body.innerText.includes('não conseguiu salvar')`);
+ await send('Page.removeScriptToEvaluateOnNewDocument',{identifier:injection.identifier});
+ fs.mkdirSync('docs/auditoria-desktop-mobile',{recursive:true});fs.writeFileSync('docs/auditoria-desktop-mobile/regressions-fixed.json',JSON.stringify({date:'2026-09-13',environment:'Chrome emulado; APIs externas bloqueadas',passed:results},null,2));
+} finally {ws.close();}

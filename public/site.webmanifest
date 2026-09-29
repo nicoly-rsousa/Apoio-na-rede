@@ -1,0 +1,18 @@
+{
+  "name": "Apoio na rede",
+  "short_name": "Apoio",
+  "description": "Informações verificadas sobre acessibilidade urbana.",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#101111",
+  "theme_color": "#101111",
+  "icons": [
+    {
+      "src": "/brand/favicon.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

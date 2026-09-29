@@ -1,0 +1,166 @@
+[
+  {
+    "name": "network-failures",
+    "value": [
+      {
+        "host": "fonts.googleapis.com",
+        "error": "net::ERR_NETWORK_ACCESS_DENIED"
+      },
+      {
+        "host": "vlibras.gov.br",
+        "error": "net::ERR_NETWORK_ACCESS_DENIED"
+      }
+    ]
+  },
+  {
+    "name": "preferences-focus-entry",
+    "value": "Fechar janela de preferências"
+  },
+  {
+    "name": "preferences-focus-wrap",
+    "value": "Salvar Preferências"
+  },
+  {
+    "name": "preferences-saved",
+    "value": "[\"mobilidade\"]"
+  },
+  {
+    "name": "preferences-filter-persisted",
+    "value": [
+      "Mobilidade"
+    ]
+  },
+  {
+    "name": "mobility-filter-result",
+    "value": "Mostrando 1 locais encontrados em Cataguases\nMapa\nLista"
+  },
+  {
+    "name": "search-without-accent",
+    "value": "Mostrando 0 locais encontrados em Cataguases para \"Auditoria Cafe\"\nMapa\nLista"
+  },
+  {
+    "name": "search-with-accent",
+    "value": "Mostrando 1 locais encontrados em Cataguases para \"Auditoria Café\"\nMapa\nLista"
+  },
+  {
+    "name": "verified-filter-excludes-pending",
+    "value": "Mostrando 0 locais encontrados em Cataguases\nMapa\nLista"
+  },
+  {
+    "name": "report-buttons",
+    "value": [
+      {
+        "label": "Denunciar avaliação",
+        "title": "Denunciar avaliação abusiva ou falsa"
+      }
+    ]
+  },
+  {
+    "name": "report-saved",
+    "value": [
+      true
+    ]
+  },
+  {
+    "name": "desktop-map-nav-from-list",
+    "value": false
+  },
+  {
+    "name": "desktop-panel-extra-height",
+    "value": {
+      "top": 42.203125,
+      "bottom": 648,
+      "height": 605.796875,
+      "maxHeight": "none"
+    }
+  },
+  {
+    "name": "toolbar-escape-closes",
+    "value": false
+  },
+  {
+    "name": "wizard-criteria-320",
+    "value": {
+      "viewport": 320,
+      "client": 320,
+      "scroll": 320
+    }
+  },
+  {
+    "name": "wizard-criteria-360",
+    "value": {
+      "viewport": 360,
+      "client": 360,
+      "scroll": 360
+    }
+  },
+  {
+    "name": "wizard-criteria-768",
+    "value": {
+      "viewport": 768,
+      "client": 768,
+      "scroll": 768
+    }
+  },
+  {
+    "name": "wizard-criteria-1440",
+    "value": {
+      "viewport": 1440,
+      "client": 1425,
+      "scroll": 1425
+    }
+  },
+  {
+    "name": "wizard-photos-320",
+    "value": {
+      "viewport": 342,
+      "client": 320,
+      "scroll": 342
+    }
+  },
+  {
+    "name": "wizard-photos-360",
+    "value": {
+      "viewport": 360,
+      "client": 360,
+      "scroll": 360
+    }
+  },
+  {
+    "name": "wizard-photos-768",
+    "value": {
+      "viewport": 768,
+      "client": 768,
+      "scroll": 768
+    }
+  },
+  {
+    "name": "wizard-photos-1440",
+    "value": {
+      "viewport": 1440,
+      "client": 1425,
+      "scroll": 1425
+    }
+  },
+  {
+    "name": "desktop-registration-list",
+    "value": "Mostrando 1 locais encontrados em Cataguases\nMapa\nLista"
+  },
+  {
+    "name": "yellow-contrast-colors",
+    "value": [
+      {
+        "text": "Refazer configuração guiada",
+        "color": "rgb(184, 235, 51)",
+        "background": "rgb(173, 184, 182)"
+      }
+    ]
+  },
+  {
+    "name": "storage-unavailable",
+    "value": {
+      "rootChildren": 0,
+      "text": ""
+    }
+  }
+]
